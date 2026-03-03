@@ -36,7 +36,7 @@ curl -H "x-api-key: YOUR_API_KEY" \
      "https://api.voyager.online/beta/txns/0x04a3c..."
 ```
 
-The response includes the transaction type, status, sender, fee, and block number. The `fee` is a raw integer in wei — divide by 10^18 for ETH.
+The response includes the transaction type, status, sender, fee, and block number. The `actualFee` is a raw integer in wei — divide by 10^18 for ETH.
 
 ---
 

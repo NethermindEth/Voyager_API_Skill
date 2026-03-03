@@ -34,7 +34,11 @@ Voyager is **not** an RPC node. You cannot submit transactions or call contract 
 | `GET /blocks` | List and retrieve Starknet blocks | `blocks.md` |
 | `GET /txns` | List and retrieve transactions | `transactions.md` |
 | `GET /contracts/{address}` | Look up deployed contract details | `contracts.md` |
-| `GET /classes/{classHash}` | Look up contract class metadata | `contracts.md` |
+| `GET /classes` | List all declared contract classes | `classes.md` |
+| `GET /classes/{classHash}` | Look up contract class by hash | `classes.md` |
+| `GET /classes/{classHash}/contracts` | List contracts deployed from a class | `classes.md` |
+| `GET /classes/{classHash}/verified` | Check class verification status | `classes.md` |
+| `GET /classes/{classHash}/source-code` | Get verified class source code | `classes.md` |
 | `GET /tokens/transfers` | Query token transfer events | `tokens.md` |
 | `GET /events` | Retrieve contract-emitted events | `events.md` |
 
