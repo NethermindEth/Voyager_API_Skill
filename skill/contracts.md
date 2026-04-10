@@ -45,7 +45,7 @@ Returns metadata and details for a specific deployed contract.
 
 ```
 curl -H "x-api-key: YOUR_API_KEY" \
-     "https://api.voyager.online/beta/contracts/0x049d36..."
+     "https://api.voyager.online/beta/contracts/${contractAddress}"
 ```
 
 ### Contract Fields
@@ -70,7 +70,7 @@ Note: Important: It's highly recommended to set the timestampFrom and timestampT
 
 ```
 curl -H "x-api-key: YOUR_API_KEY" \
-     "https://api.voyager.online/beta/contracts/${contractAddress}/transfers?timestampFrom=${timestampFrom}&timestampTo=${timestampTo}&type=erc20&ps=10
+     "https://api.voyager.online/beta/contracts/${contractAddress}/transfers?timestampFrom=${timestampFrom}&timestampTo=${timestampTo}&type=erc20&ps=10"
 ```
 
 ### Contract Fields
@@ -136,7 +136,7 @@ Retrieve the token balances of a specific contract address.
 
 ```
 curl -H "x-api-key: YOUR_API_KEY" \
-     "/contracts/{contractAddress}/token-balances"
+     "https://api.voyager.online/beta/contracts/${contractAddress}/token-balances"
 ```
 
 ### Contract Fields
