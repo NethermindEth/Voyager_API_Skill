@@ -2,8 +2,7 @@
 
 ## Overview
 
-Retrieve detailed information about a specific message using its message hash.
-
+Retrieve detailed information about the Voyager statistics
 ---
 
 ## Get Stats
