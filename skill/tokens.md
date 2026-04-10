@@ -2,66 +2,95 @@
 
 ## Overview
 
-The tokens endpoint provides access to token transfer events on Starknet. You can query ERC20, ERC721, and ERC1155 transfers with optional filters by contract, sender, or recipient.
+List all deployed tokens on the Starknet network with filtering and sorting options.
 
 ---
 
-## List Token Transfers
+## Get All Tokens
 
 ```
-GET /tokens/transfers
+GET /tokens
 ```
 
-Returns a paginated list of token transfer events, ordered from most recent to oldest.
+List all deployed tokens on the Starknet network with filtering and sorting options.
 
 ### Parameters
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `p` | integer | Yes | Page number (starts at 1) |
-| `ps` | integer | Yes | Page size (items per page) |
-| `contract` | string | No | Filter by token contract address |
-| `from` | string | No | Filter by sender address |
-| `to` | string | No | Filter by recipient address |
+| `type` | string | No | Token type (default: "erc20"). Allowed: erc20, erc721, erc1155 |
+| `attribute` | string | No | Order by specific attribute (default: "holders"). Allowed: holders, transfers |
+| `p` | integer | No | Page number to retrieve (starts from 1) |
+| `ps` | integer | No | The number of items to return in a page. |
 
 ### Example
 
 ```
 curl -H "x-api-key: YOUR_API_KEY" \
-     "https://api.voyager.online/beta/tokens/transfers?p=1&ps=10"
+     "https://api.voyager.online/beta/tokens?type=erc20&attribute=holders&p=1&ps=10"
+```
+---
+
+
+## Get Token Holders
+
+```
+GET /tokens/{address}/holders
 ```
 
-### Filtered Examples
+Retrieves a paginated list of token holders for a specific ERC20 token, including holder addresses, balances, aliases, and last transfer times.
 
-Transfers for a specific token contract:
+### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `address` | string | Yes | Token contract address |
+
+
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `p` | integer | No | Page number to retrieve (starts from 1) |
+| `ps` | integer | No | The number of items to return in a page. |
+
+### Example
 
 ```
 curl -H "x-api-key: YOUR_API_KEY" \
-     "https://api.voyager.online/beta/tokens/transfers?p=1&ps=10&contract=0x049d36..."
-```
-
-Transfers sent by a specific address:
-
-```
-curl -H "x-api-key: YOUR_API_KEY" \
-     "https://api.voyager.online/beta/tokens/transfers?p=1&ps=10&from=0x01a2b3..."
+     "https://api.voyager.online/beta/tokens/0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8/holders?ps=10&p=1"
 ```
 
 ---
+## Get Event Activities
 
-## Response Fields
+```
+GET /event-activity
+```
 
-| Field | Type | Description |
-|---|---|---|
-| `transactionHash` | string | Hash of the containing transaction |
-| `from` | string | Sender address |
-| `to` | string | Recipient address |
-| `value` | string | Amount transferred (raw integer, unscaled) |
-| `tokenId` | string | Token ID (ERC721 and ERC1155 only) |
-| `tokenAddress` | string | Token contract address |
-| `tokenType` | string | `ERC20`, `ERC721`, or `ERC1155` |
-| `timestamp` | integer | Unix timestamp of the containing block |
-| `blockNumber` | integer | Block containing the transfer |
+List event activities such as token transfers with detailed filtering options. For contract-specific transfers, see Get Contract Transfers.
+
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `token_type` | string | No | Token standards filter (e.g., "erc20", "erc721", "erc1155") |
+| `from_block` | integer | No | Starting block number for the query |
+| `to_block` | integer | No | Ending block number for the query |
+| `from_timestamp` | integer | No | Lower time boundary (seconds since Unix epoch) |
+| `to_timestamp` | integer | No | Upper time boundary (seconds since Unix epoch) |
+| `from_address` | string | No | Address sending tokens |
+| `to_address` | string | No | Address receiving tokens |
+| `sort` | string | No | Order of results ("asc" or "desc") |
+| `page_size` | integer | No | Number of items per page |
+| `last_id` | string | No | ID of the last transfer for pagination |
+
+### Example
+
+```
+curl -H "x-api-key: YOUR_API_KEY" \
+     "https://api.voyager.online/beta/event-activity?token_type=erc20&page_size=10&sort=desc"
+```
 
 ---
 
@@ -92,16 +121,6 @@ For example, if `value` is `"1000000000000000000"` and the token has 18 decimals
 ```
 
 You can retrieve the token's decimals from the contract metadata or ABI.
-
----
-
-## Notes
-
-- Combine `from` and `to` filters to find transfers between two specific addresses
-- The `contract` filter is the most efficient way to narrow results to a single token
-- Transfers are indexed from emitted `Transfer` events, not from transaction calldata
-- Mint events typically have `from` set to the zero address (`0x0`)
-- Burn events typically have `to` set to the zero address (`0x0`)
 
 ---
 

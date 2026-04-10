@@ -19,7 +19,7 @@ Returns a paginated list of Starknet transactions, ordered from most recent to o
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `to` | string | No | Only transactions from this contract address will be retrieved |
-| `rejected` | boolean | No | f true, only rejected transactions will be retrieved. Otherwise, only non-rejected transactions |
+| `rejected` | boolean | No | if true, only rejected transactions will be retrieved. Otherwise, only non-rejected transactions |
 | `p` | integer | Yes | Page number (starts at 1) |
 | `ps` | integer | Yes | Page size (items per page) |
 | `block` | integer | No | Filter by block number |

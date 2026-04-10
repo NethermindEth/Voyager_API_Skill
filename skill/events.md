@@ -6,7 +6,7 @@ The events endpoint provides access to events emitted by Starknet contracts. Eve
 
 ---
 
-## List Events
+## Get All Events
 
 ```
 GET /events
@@ -31,32 +31,6 @@ curl -H "x-api-key: YOUR_API_KEY" \
      "https://api.voyager.online/beta/events?p=1&ps=10"
 ```
 
-### Filtered Examples
-
-Events from a specific contract:
-
-```
-curl -H "x-api-key: YOUR_API_KEY" \
-     "https://api.voyager.online/beta/events?p=1&ps=10&contract=0x049d36..."
-```
-
----
-
-## Get Events for a Transaction
-
-```
-GET /events?txnHash={transactionHash}
-```
-
-Returns all events emitted within a specific transaction.
-
-### Example
-
-```
-curl -H "x-api-key: YOUR_API_KEY" \
-     "https://api.voyager.online/beta/events?txnHash=0x04a3c..."
-```
-
 ---
 
 ## Response Fields
@@ -72,6 +46,13 @@ curl -H "x-api-key: YOUR_API_KEY" \
 | `timestamp` | integer | Unix timestamp of the containing block |
 
 ---
+
+## Parameter Constraints
+Note: The contract parameter cannot be mixed with blockHash or txnHash parameters. Use either:
+
+contract to filter by contract address, OR
+blockHash to filter by block, OR
+txnHash to filter by transaction
 
 ## Understanding Keys and Data
 
